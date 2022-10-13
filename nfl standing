@@ -1,0 +1,53 @@
+"""
+Created on Thu Oct 13 22:43:02 2022
+
+@author: eziuz
+
+Code used to scrap the nfl standings for 2019 from the nfl website
+"""
+# import the needed libraries
+
+from bs4 import BeautifulSoup as bs
+import requests
+import pandas as pd
+
+# webpage extraction and creation of soup object
+url = "https://www.nfl.com/standings/league/2019/REG"
+page = requests.get(url)
+page
+
+soup = bs(page.text, "lxml")
+soup
+
+# the whole table extraction
+table = soup.find('table', {'summary':'Standings - Detailed View'})
+table
+
+# the columns headings
+columns = table.find_all('th')
+columns
+
+column_list = []
+
+for i in columns:
+    column = i.text
+    column_list.append(column)
+    
+column_list
+
+# generation of dataframe using pandas
+
+df = pd.DataFrame(columns = column_list)
+df
+
+table_row = table.find_all('tr')[1:]
+
+
+for j in table_row:
+    cell_data = j.find_all('td')
+    cell = [k.text for k in cell_data]
+    length = len(df)
+    df.loc[length] = cell
+    
+# save the file to the desktop
+df.to_csv(r'C:\Users\eziuz\Desktop\nfl_standing_2019.csv')
