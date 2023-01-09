@@ -3,7 +3,7 @@ Created on Thu Oct 13 22:43:02 2022
 
 @author: eziuz
 
-Code used to scrap the nfl standings for 2019 from the nfl website
+Code used to scrape the nfl standings for 2019 from the nfl website
 """
 # import the needed libraries
 
