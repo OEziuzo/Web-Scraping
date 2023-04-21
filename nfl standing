@@ -13,19 +13,16 @@ import pandas as pd
 
 # webpage extraction and creation of soup object
 url = "https://www.nfl.com/standings/league/2019/REG"
-page = requests.get(url)
-page
+web_page = requests.get(url)
 
-soup = bs(page.text, "lxml")
-soup
+soupy = bs(web_page.text, "lxml")
 
 # the whole table extraction
-table = soup.find('table', {'summary':'Standings - Detailed View'})
+table = soupy.find('table', {'summary':'Standings - Detailed View'})
 table
 
 # the columns headings
 columns = table.find_all('th')
-columns
 
 column_list = []
 
@@ -38,7 +35,6 @@ column_list
 # generation of dataframe using pandas
 
 df = pd.DataFrame(columns = column_list)
-df
 
 table_row = table.find_all('tr')[1:]
 
